@@ -13,7 +13,7 @@ def rename_images(folder_path):
         print(f"Renaming {filename} to {new_filename}")
 
 # 指定文件夹路径
-folder_path = './index'
+folder_path = './a3400is/调色'
 
 # 调用函数对文件夹中的图片进行编号
 rename_images(folder_path)
