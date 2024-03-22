@@ -27,7 +27,7 @@
     <script>
         const photoWall = document.querySelector('.photo-wall')
         // 添加图片dom，直接定好了数量和名称
-        for (let i = 1; i <= 65; i++) {
+        for (let i = 1; i <= 64; i++) {
             let photoItem = `
                 <div class="photo-wrapper">
                     <img src="./asset/img/allImg/${i}.jpg">
@@ -88,7 +88,7 @@
         function detailPhotoFun() {
             const detailShowPhoto = document.querySelector('.modal .detail-photo img')
             nextPage++
-            if (nextPage > 65)//翻页循环
+            if (nextPage > 64)//翻页循环
                 nextPage = 1
             detailShowPhoto.src = `./asset/img/allImg/${nextPage}.jpg`
         }
