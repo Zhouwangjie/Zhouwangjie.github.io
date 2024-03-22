@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOMATOLIFE</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="about">
+        <a href="index.html"><span id="toggle">TOMATOLIFE</span></a>
+        <div class="introduce1">
+            <p>Some date with ccd.</p>
+        </div>
+    </div>
+    <div class="photo">
+        <div class="photo-wall">
+        </div>
+        <div class="modal">
+            <div class="close">CLOSE</div>
+            <div class="detail-photo"></div>
+        </div>
+    </div>
+    <script>
+        const photoWall = document.querySelector('.photo-wall')
+        // 添加图片dom，直接定好了数量和名称
+        for (let i = 1; i <= 24; i++) {
+            let photoItem = `
+                <div class="photo-wrapper">
+                    <img src="./asset/img/a3400is/${i}.jpg">
+                </div>
+            `
+            photoWall.innerHTML += photoItem
+        }
+
+        // 获取dom元素
+        const photoWrappers = document.querySelectorAll('.photo-wrapper')
+        const detailPhoto = document.querySelector('.detail-photo')
+        const close = document.querySelector('.close')
+        const modal = document.querySelector('.modal')
+        let nextPage
+        let showPhotoIndex
+        let timer = null
+
+        function photoWrapperFun(element, index) {
+            showPhotoIndex = index
+            nextPage = index + 1
+            for (let i = 0; i < photoWrappers.length; i++) {
+                if (i != index) {
+                    photoWrappers[i].style.transitionDelay = '.' + Math.floor(Math.random() * 5) + 1 + 's'
+                    photoWrappers[i].style.opacity = 0
+                }
+            }
+            element.style.transitionDelay = 1.5 + 's'
+            element.style.opacity = 0
+            photoWall.style.transitionDelay = 2 + 's'
+            photoWall.style.zIndex = -1
+            document.body.style.overflow = 'hidden'
+            setTimeout(() => {
+                modal.style.zIndex = 5
+                close.style.display = 'block'
+                detailPhoto.appendChild(element.children[0].cloneNode(true))
+                detailPhoto.style.opacity = 1
+            }, 2500);
+        }
+        function closeFun() {
+            detailPhoto.style.transitionDelay = ''
+            detailPhoto.style.opacity = 0
+            setTimeout(() => {
+                modal.style.zIndex = -10
+                close.style.display = 'none'
+                detailPhoto.innerHTML = ''
+                photoWrappers[showPhotoIndex].style.transitionDelay = ''
+                photoWrappers[showPhotoIndex].style.opacity = 1
+                document.body.style.overflow = ''
+                for (let i = 0; i < photoWrappers.length; i++) {
+                    if (i != showPhotoIndex) {
+                        photoWrappers[i].style.transitionDelay = Math.random() + 1 + 's'
+                        photoWrappers[i].style.opacity = 1
+                    }
+                }
+            }, 600)
+        }
+
+        function detailPhotoFun() {
+            const detailShowPhoto = document.querySelector('.modal .detail-photo img')
+            nextPage++
+            if (nextPage > 24)//翻页循环
+                nextPage = 1
+            detailShowPhoto.src = `./asset/img/a3400is/${nextPage}.jpg`
+        }
+        //节流
+        function throttle(fn, delay) {
+            return function () {
+                if (timer) {
+                    return
+                }
+                fn.apply(this, arguments)
+                timer = setTimeout(() => {
+                    timer = null
+                }, delay);
+            }
+        }
+
+        photoWrappers.forEach((element, index) => {
+            element.onclick = throttle(() => photoWrapperFun(element, index), 2000)
+        })
+        close.onclick = throttle(() => closeFun(), 2000)
+        detailPhoto.onclick = detailPhotoFun
+
+        document.getElementById('toggle').addEventListener('click', function() {
+            var intro = document.querySelector('.introduce');
+            if (intro.style.display === 'none') {
+                intro.style.display = 'block';
+            } else {
+                intro.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -10,10 +10,19 @@
 
 <body>
     <div class="about">
-        <span>TOMATOLIFE</span>
-        <div class="intrroduce">
+        <span id="toggle">TOMATOLIFE</span>
+        <div class="introduce1">
             <p>Specimens of each picture, it is time.</p>
-<!--            <p>You can write something about yourself here to introduce yourself</p>-->
+        </div>
+        <div class="introduce">
+            <ul>
+<!--                <li>Project</li>-->
+                <a href="Film.html"><li>Film</li></a>
+                <a href="cannon80d.html"><li>Cannon80D</li></a>
+                <a href="a3400is.html"><li>a3400is</li></a>
+<!--                <li>iPhone</li>-->
+                <a href="https://weibo.com/u/6696873650" target="_blank">@weibo</a>
+            </ul>
         </div>
     </div>
     <div class="photo">
@@ -27,10 +36,10 @@
     <script>
         const photoWall = document.querySelector('.photo-wall')
         // 添加图片dom，直接定好了数量和名称
-        for (let i = 1; i <= 64; i++) {
+        for (let i = 1; i <= 11; i++) {
             let photoItem = `
                 <div class="photo-wrapper">
-                    <img src="./asset/img/allImg/${i}.jpg">
+                    <img src="./asset/img/index/${i}.jpg">
                 </div>
             `
             photoWall.innerHTML += photoItem
@@ -88,9 +97,9 @@
         function detailPhotoFun() {
             const detailShowPhoto = document.querySelector('.modal .detail-photo img')
             nextPage++
-            if (nextPage > 64)//翻页循环
+            if (nextPage > 11)//翻页循环
                 nextPage = 1
-            detailShowPhoto.src = `./asset/img/allImg/${nextPage}.jpg`
+            detailShowPhoto.src = `./asset/img/index/${nextPage}.jpg`
         }
         //节流
         function throttle(fn, delay) {
@@ -110,6 +119,15 @@
         })
         close.onclick = throttle(() => closeFun(), 2000)
         detailPhoto.onclick = detailPhotoFun
+
+        document.getElementById('toggle').addEventListener('click', function() {
+            var intro = document.querySelector('.introduce');
+            if (intro.style.display === 'none') {
+                intro.style.display = 'block';
+            } else {
+                intro.style.display = 'none';
+            }
+        });
     </script>
 </body>
 
